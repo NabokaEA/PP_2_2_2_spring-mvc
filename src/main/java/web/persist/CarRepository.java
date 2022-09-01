@@ -3,6 +3,7 @@ package web.persist;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,14 +29,19 @@ public class CarRepository {
         carMap.put(id, car);
     }
 
-    public List<Car> nCars(int n) {
-        if (n>carMap.size()-1){
-            n=carMap.size()-1;
+    public List<Car> allCars() {
+        return new ArrayList<>(carMap.values());
+    }
+
+    public List<Car> nCars(long n) {
+        ArrayList<Car> cars = new ArrayList<>();
+        if (n>carMap.size()){
+            n=carMap.size();
         }
-        List<Car> carList = null;
-        for (int i = 0; i < n - 1; i++) {
-            carList.add(carMap.get(i));
+        for (int i = 1; i <= n; i++) {
+            long j=i;
+            cars.add(carMap.get(j));
         }
-        return carList;
+        return cars;
     }
 }
